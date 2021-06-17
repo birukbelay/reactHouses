@@ -1,22 +1,44 @@
-import { useContext, useRef } from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import React from "react"
 import "./login.css";
-import { loginCall } from "../../../store/auth/apiCalls";
-import { AuthContext } from "../../../context/AuthContext";
+import GoogleLogin from 'react-google-login'
+import {useDispatch, useSelector} from "react-redux";
+import { Redirect } from "react-router-dom";
 import { CircularProgress } from "@material-ui/core";
+import axios from "axios";
+
 
 export default function Login() {
+
+  const dispatch = useDispatch()
+  const isFetching = useSelector(state => state.auth.isFetching)
+  const [user, setUser] = useState({});
   const email = useRef();
   const password = useRef();
-  const { isFetching, dispatch } = useContext(AuthContext);
 
-  const handleClick = (e) => {
+  const responseGoogle = (response) => {
+    console.log(response);
+    return <Redirect to={this.state.redirect} />
+  }
+
+  const handleClick = async (e) =>  {
     e.preventDefault();
-    loginCall(
-      { email: email.current.value, password: password.current.value },
-      dispatch
-    );
+
+    dispatch({ type: "LOGIN_START" });
+    try {
+      const res = await axios.post("/auth/login", { email: email.current.value, password: password.current.value });
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+      setUser(res.data)
+
+    } catch (err) {
+      dispatch({ type: "LOGIN_FAILURE", payload: err });
+    }
+
   };
+
+  useEffect(()=>{
+    localStorage.setItem("user", JSON.stringify(user))
+  },[user])
 
   return (
     <div className="login">
@@ -59,6 +81,15 @@ export default function Login() {
                 "Create a New Account"
               )}
             </button>
+            <div>
+              <GoogleLogin
+                  clientId="377053875187-09dfb5s9voilhfsoqrqf5tf3251foj9q.apps.googleusercontent.com"
+                  buttonText="Login"
+                  cookiePolicy={'single_host_origin'}
+                  onSuccess={responseGoogle}
+                  onFailure={responseGoogle}
+              />
+            </div>
           </form>
         </div>
       </div>

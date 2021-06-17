@@ -5,42 +5,36 @@ import {
 API_ROOT
 } from "../constants";
 
-
-
-export const uploadCategory = (name) => async (dispatch) => {
-    dispatch({type: types.LOADING_POST});
-
+export const loginCall = async (userCredential, dispatch) => {
+    dispatch({ type: "LOGIN_START" });
     try {
-        const response =await  fetchData(`categories/`, 'POST', {name:name})
-        dispatch({ type: types.UPLOAD_SUCCESS});
-        dispatch(getCategories());
-        // console.log(response)
-    }catch (e) {
+        const res = await axios.post("/auth/login", userCredential);
+        dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+
+    } catch (err) {
+        dispatch({ type: "LOGIN_FAILURE", payload: err });
+    }
+};
+
+export const CreateItem = (items) => async (dispatch) => {
+    dispatch({type: types.LOADING_POST});
+    try {
+        const res = await axios.post(API_ROOT+"/house", items);
+        dispatch({ type: types.UPLOAD_SUCCESS, payload: res.data });
+        //to update the list
+        dispatch(getHouses());
+    } catch (err) {
         dispatch({ type: types.POST_ERROR});
     }
-
-    // axios
-    //     .post(API_ROOT + 'categories/', formData)
-    //     .then((res) => {
-    //         dispatch({ type: types.UPLOAD_SUCCESS});
-    //         dispatch(getCategories());
-    //         console.log("postRes-", res)
-    //     })
-    //     .catch((err) => {
-    //         dispatch({ type: types.ERROR, error:err });
-    //         console.log(err)
-    //     });
-
-
 };
 
 export const deleteCategory = (id) => (dispatch) => {
     dispatch({type: types.LOADING_POST});
     axios
-        .delete(API_ROOT +`${id}/categories` )
+        .delete(API_ROOT +`house/${id}` )
         .then((res) => {
             dispatch({ type: types.UPLOAD_SUCCESS});
-            dispatch(getCategories());
+            dispatch(getHouses());
 
         })
         .catch((err) => {
@@ -49,10 +43,18 @@ export const deleteCategory = (id) => (dispatch) => {
         });
 };
 
-export const updateCategory = (id, name) => async  (dispatch) => {
+export const updateCategory = (id, items) => async  (dispatch) => {
     dispatch({type: types.LOADING_POST});
     try {
-        const response =await  fetchData(`${id}/categories`, 'POST', {name:name})
+        dispatch({type: types.LOADING_POST});
+        try {
+            const res = await axios.post(API_ROOT+`house/${id}`, items);
+            dispatch({ type: types.UPLOAD_SUCCESS, payload: res.data });
+            //to update the list
+            dispatch(getHouses());
+        } catch (err) {
+            dispatch({ type: types.POST_ERROR});
+        }
 
     }catch (e) {
         dispatch({type: types.POST_ERROR});
@@ -77,7 +79,7 @@ const receivedInitialCategories = ( categories) => ({
     recievedAt:Date.now()
 })
 
-export const getCategories = () => async (dispatch) => {
+export const getHouses = () => async (dispatch) => {
     try {
         dispatch({ type: types.LOADING_CATEGORY });
         const response =await  ApiGetCategories()
@@ -89,7 +91,7 @@ export const getCategories = () => async (dispatch) => {
 
 async function ApiGetCategories() {
 
-    let query = API_ROOT+`categories/`
+    let query = API_ROOT+`house/`
     // const res = await fetch(query)
 
     const res = await fetch(query);

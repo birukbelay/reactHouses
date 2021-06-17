@@ -1,4 +1,11 @@
-const AuthReducer = (state, action) => {
+const INITIAL_STATE = {
+  user:JSON.parse(localStorage.getItem("user")) || null,
+  isFetching: false,
+  error: false,
+};
+
+
+const AuthReducer = (state=INITIAL_STATE, action) => {
   switch (action.type) {
     case "LOGIN_START":
       return {

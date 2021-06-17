@@ -5,7 +5,7 @@ import Online from "./online/Online";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../../store/auth/AuthContext";
 import { Add, Remove } from "@material-ui/icons";
 import {API_ROOT} from "../../store/constants";
 
@@ -13,9 +13,7 @@ export default function Rightbar({ house }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [owner, setFriends] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
-  const [followed, setFollowed] = useState(
-    currentUser.followings.includes(house?.id)
-  );
+
 
   useEffect(() => {
     const getFriends = async () => {
@@ -30,23 +28,7 @@ export default function Rightbar({ house }) {
     getFriends();
   }, [house]);
 
-  const handleClick = async () => {
-    try {
-      if (followed) {
-        await axios.put(`/users/${house._id}/unfollow`, {
-          userId: currentUser._id,
-        });
-        dispatch({ type: "UNFOLLOW", payload: house._id });
-      } else {
-        await axios.put(`/users/${house._id}/follow`, {
-          userId: currentUser._id,
-        });
-        dispatch({ type: "FOLLOW", payload: house._id });
-      }
-      setFollowed(!followed);
-    } catch (err) {
-    }
-  };
+
 
   const HomeRightbar = () => {
     return (

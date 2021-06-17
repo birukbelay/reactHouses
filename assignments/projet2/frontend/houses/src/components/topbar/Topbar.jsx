@@ -2,7 +2,7 @@ import React from "react"
 import "./topbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+// import { useContext } from "react";
 import {useDispatch, useSelector} from "react-redux";
 
 
@@ -30,7 +30,7 @@ export default function Topbar() {
       </div>
       <div className="topbarRight">
 
-        <Link to={`/profile/${""}`}>
+        <Link to={'/admin'}>
           <img
             src={
                PF + "person/noAvatar.png"

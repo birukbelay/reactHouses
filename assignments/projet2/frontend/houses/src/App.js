@@ -20,7 +20,7 @@ const NoMatchPage = () => {
 };
 function App() {
     // const { user } = useContext(AuthContext);
-    const user = useSelector(state => state.user)
+    const user = useSelector(state => state.auth.user)
     console.log("------->the auth context=--->", user)
   return (
     <Router>
@@ -29,8 +29,10 @@ function App() {
 
 
         <Switch>
-
-            <Route exact path='/' component={Home}/>
+            <Route exact path="/">
+                {user ? <Home /> : <Login />}
+            </Route>
+            {/*<Route exact path='/' component={Home}/>*/}
             <Route exact path='/newGemenaye' component={Admin}/>
             <Route  path='/admin' component={Admin}/>
             <Route  path='/login' component={Login}/>

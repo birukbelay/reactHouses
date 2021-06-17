@@ -12,44 +12,20 @@ const LeftSideBarInner =()=>{
       <div className="scrollbar-sidebar">
         <div className="app-sidebar__inner">
           <ul className="vertical-nav-menu">
-            <li className="app-sidebar__heading">Pages</li>
+            <li className="app-sidebar__heading">List</li>
             <li>
               <Link to={`${match.path}/`}  className="mm-active">
                 <i className="metismenu-icon pe-7s-info" />
-                All issues
+                Your Listings
               </Link>
             </li>
-            <li className="app-sidebar__heading">Issue Pages</li>
 
 
-
-            <li>
-              <Link to={`${match.path}/list`} onClick={()=>dispatch(getPendingIssues(types.IssueTypes.PENDING))}>
-                <i className="metismenu-icon pe-7s-hourglass" />
-                Pending
-                <i className="metismenu-state-icon pe-7s-angle-down caret-left" />
-              </Link>
-
-            </li>
-            <li>
-              <Link to={`${match.path}/list`} onClick={()=>dispatch(getPendingIssues(types.IssueTypes.APPROVED))}>
-                <i className="metismenu-icon pe-7s-check" />
-                Approved
-                <i className="metismenu-state-icon pe-7s-angle-down caret-left" />
-              </Link>
-
-            </li>
-            <li>
-              <Link to={`${match.path}/list`} onClick={()=>dispatch(getPendingIssues(types.IssueTypes.DECLINED))}>
-                <i className="metismenu-icon pe-7s-close-circle" />
-                Declined
-              </Link>
-            </li>
-            <li className="app-sidebar__heading">Categories</li>
+            <li className="app-sidebar__heading">Add Houses</li>
             <li>
               <Link to={`${match.path}/add`} >
                 <i className="metismenu-icon pe-7s-wallet" />
-                Categories
+                Create House
               </Link>
             </li>
             <li>

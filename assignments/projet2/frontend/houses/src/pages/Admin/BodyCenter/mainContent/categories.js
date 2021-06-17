@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react"
 import {useDispatch, useSelector} from "react-redux";
-import {uploadCategory, getCategories, updateCategory, deleteCategory } from '../../../../store/category/category.actions'
+import {CreateItem, getHouses, updateCategory, deleteCategory } from '../../../../store/category/category.actions'
 import NoItems from './dumb.components/noContent'
 
 function Category({category}) {
@@ -47,13 +47,13 @@ const Categories =()=>{
     const [name, setName]= useState();
 
     useEffect(() => {
-        dispatch(getCategories())
+        dispatch(getHouses())
     }, []);
 
     const upload=(event)=>{
         event.preventDefault();
 
-        dispatch(uploadCategory(name))
+        dispatch(CreateItem(name))
     }
 
     const hasCategories= categories!==undefined &&categories.length>0;

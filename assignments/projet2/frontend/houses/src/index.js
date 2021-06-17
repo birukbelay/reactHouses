@@ -7,15 +7,13 @@ import { Provider } from 'react-redux'
 import Store from './store/store'
 import { getPendingIssues } from './store/issues/issues.actions';
 import * as types from './store/issues/issues.types'
-import { AuthContextProvider } from "./context/AuthContext";
+
 Store.dispatch(getPendingIssues(types.IssueTypes.PENDING))
 
 
 ReactDOM.render(
   <Provider store={Store}>
-      <AuthContextProvider>
         <App />
-      </AuthContextProvider>
   </Provider>,
   
   document.getElementById('root')

@@ -1,8 +1,8 @@
 import React from "react"
 import Topbar from "../../components/topbar/Topbar";
-// import Sidebar from "../../components/sidebar/Sidebar";
+import Sidebar from "../../components/sidebar/Sidebar";
 import Feed from "./feed/Feed";
-// import Rightbar from "../../components/rightbar/Rightbar";
+import Rightbar from "../../components/rightbar/Rightbar";
 import "./home.css"
 
 export default function Home() {
