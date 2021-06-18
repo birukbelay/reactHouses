@@ -1,0 +1,8 @@
+
+export const ERROR = 'ERROR'
+// export const NETWORK_ERROR = 'NETWORK_ERROR';
+export const LOADING_POST = 'LOADING_POST';
+
+export const LOADING_COMMENTS = 'LOADING_COMMENTS'
+export const RECEIVED_COMMENTS = 'RECEIVED_COMMENTS'
+export const UPLOAD_SUCCESS = 'UPLOAD_SUCCESS'
